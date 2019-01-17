@@ -1,0 +1,188 @@
+Exercises:
+1. What are some pros and cons of using linked lists instead of arrays?
+
+The pros of linked lists are that insertions and deletions are easier and efficient, the number of nodes (dynamic allocation)can use multiple data types as elements. The cons are that they consume more memory than arrays, need to clear memory once we done with it, and handling pointers is a bit tricky compared to arrays.
+
+2. Come up with a real world example of a linked list.
+
+A bunch of people waiting in line for something to order.
+
+Programming Exercises:
+1. The linked list push function should take a value, create a node, and add it to the end of a list. Below is pseudocode for a push function for a singly linked list. However, there is something wrong with it. Submit both an explanation of the bug and a functional implementation of the method.
+
+1) Traverse back to the first node
+2) Insert the newly created node to the end of the list
+
+FUNCTION push(element)
+  IF the head node does not exist
+  THEN CREATE node
+    SET node.value TO element
+    SET node.next TO null
+  END IF
+    SET this.head to last // make copy of head node
+  WHILE last.next != null
+    SET head to last.next
+  END WHILE
+    SET newNode to last.next
+  RETURN this
+  END FUNCTION
+
+
+push(value) {
+        const newNode = {data: value, next: null}
+		if(this.head == null){
+			this.head = newNode;
+		}
+		var last = this.head;
+
+		while( last.next != null){
+			last = last.next;
+		}
+		last.next = newNode;
+		return this;
+
+2. Given an unsorted singly linked list, remove all duplicates from the linked list.
+
+FUNCTION removeDuplicate()
+
+CREATE temp1 = null, temp2 = null, dup = null
+Set head to temp1
+    WHILE( temp1 != null && temp1.next != null)
+      Set temp1 to temp2
+    WHILE( temp2.next != null)
+      IF(temp1.data == temp2.next.data)
+      Set temp2.next to dup
+      Set temp2.next.next to temp2.next
+      ELSE //meaning if there is no duplication
+        Keep assigning temp2.next to temp2
+      END WHILE
+      After WHILE loop finish, set temp1.next to temp1
+      continue untill temp1 or temp1.next hit null
+   END FUNCTION
+
+
+    removeDuplicate(){
+        var temp1 = null;
+        var temp2 = null;
+        var dup = null;
+
+        temp1 = this.head;
+		      console.log('console log temp1:');
+          console.log(temp1);
+        while( temp1 != null && temp1.next != null ){
+			    console.log('went into while loop #1');
+        temp2 = temp1;
+			    console.log('copy temp1 to temp2');
+        while( temp2.next != null ){
+				  console.log('temp1 and temp2 data')
+				  console.log(temp1.data);
+				  console.log(temp2.next.data);
+				  console.log('went into while loop #2');
+            if(temp1.data == temp2.next.data){
+              dup = temp2.next;
+				  console.log('dup was created');
+          console.log(dup);
+          temp2.next = temp2.next.next;
+            } else {
+					console.log('coundnt find dup');
+          temp2 = temp2.next;
+                }
+            }
+			    temp1 = temp1.next;
+        }
+		      return temp1;
+	}
+
+3.Given an unsorted singly linked list, reverse it.
+FUNCTION reverseList()
+
+SET prev = null, current = node, next = null
+
+WHILE(current != null)
+    SET current.next to next
+    SET prev to current.next so that direction reverse
+    SET current to prev
+    SET next to current
+END WHILE
+After you hit the null, SET prev to node
+return node
+END FUNCTION
+
+reverseList(){
+        var prev = null;
+        var current = this.head;
+        var next = null;
+          while(current != null){
+            next = current.next;
+			    current.next = prev;
+            prev = current;
+            current = next;
+            }
+          current = prev;
+		      this.head = current;
+         return current;
+    }
+
+
+# Linked List Class
+
+class LinkedList {
+    constructor(value) {
+        this.head = null;
+        this.length = 0;
+        this.push(value);
+    }
+
+    push(value) {
+      const newNode = {data: value, next: null}
+		if(this.head == null){
+			this.head = newNode;
+		}
+    else {
+		var last = this.head;
+
+		while( last.next != null){
+			console.log('went to while loop')
+			last = last.next;
+		    }
+		last.next = newNode;
+        }
+	  return this;
+	}
+
+  removeDuplicate(){
+    var temp1 = null;
+    var temp2 = null;
+    var dup = null;
+
+    temp1 = this.head;
+    while( temp1 != null && temp1.next != null ){
+    temp2 = temp1;
+    while( temp2.next != null ){
+      if(temp1.data == temp2.next.data){
+        dup = temp2.next;
+        temp2.next = temp2.next.next;
+    } else {
+    temp2 = temp2.next;
+    }
+      }
+	  temp1 = temp1.next;
+    }
+		return temp1;
+	  }
+
+  reverseList(){
+    var prev = null;
+    var current = this.head;
+    var next = null;
+      while(current != null){
+        next = current.next;
+			  current.next = prev;
+          prev = current;
+        current = next;
+            }
+        current = prev;
+	  	  this.head = current;
+      return current;
+    }
+}
